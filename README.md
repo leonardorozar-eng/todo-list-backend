@@ -33,7 +33,7 @@ todo-backend/
 
 ## Diagrama de Entidade e Relacionamento (DER)
 
-O arquivo `DER.jpg` deve estar na raiz deste repositório (adicione-o a partir do zip se ainda não estiver).
+![DER - Relacionamento 1:N entre User e Task](./DER.jpg)
 
 **Relacionamento:**
 - Um **User** possui **várias Tasks** (1:N)
