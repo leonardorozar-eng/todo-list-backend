@@ -1,0 +1,105 @@
+### =====================================================
+### ARQUIVO DE REFERÊNCIA PARA TESTES DA API
+### Use a extensão "REST Client" no VS Code
+### =====================================================
+
+@baseUrl = http://localhost:3001
+@token = {{login.response.body.token}}
+
+### -----------------------------------------------------
+### 1. CADASTRO DE USUÁRIO (POST) - RF-01
+### -----------------------------------------------------
+# @name register
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "aluno@exemplo.com",
+  "password": "senha123"
+}
+
+### -----------------------------------------------------
+### 2. LOGIN (POST) - RF-02
+### Guarda o token automaticamente para as próximas requisições
+### -----------------------------------------------------
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "aluno@exemplo.com",
+  "password": "senha123"
+}
+
+### -----------------------------------------------------
+### 3. LISTAR USUÁRIO LOGADO (GET) - RF-03
+### -----------------------------------------------------
+GET {{baseUrl}}/users
+Authorization: Bearer {{token}}
+
+### -----------------------------------------------------
+### 4. BUSCAR USUÁRIO POR ID (GET) - RF-03
+### -----------------------------------------------------
+GET {{baseUrl}}/users/1
+Authorization: Bearer {{token}}
+
+### -----------------------------------------------------
+### 5. ATUALIZAR USUÁRIO (PUT) - RF-03
+### -----------------------------------------------------
+PUT {{baseUrl}}/users/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "email": "novoemail@exemplo.com"
+}
+
+### -----------------------------------------------------
+### 6. CRIAR TAREFA (POST) - RF-04 + RF-05
+### -----------------------------------------------------
+# @name criarTarefa
+POST {{baseUrl}}/tasks
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Estudar para a prova de recuperação",
+  "description": "Revisar todos os tópicos de desenvolvimento de sistemas e fazer exercícios práticos."
+}
+
+### -----------------------------------------------------
+### 7. LISTAR TODAS AS TAREFAS DO USUÁRIO (GET) - RF-04
+### -----------------------------------------------------
+GET {{baseUrl}}/tasks
+Authorization: Bearer {{token}}
+
+### -----------------------------------------------------
+### 8. BUSCAR TAREFA POR ID (GET) - RF-04
+### -----------------------------------------------------
+GET {{baseUrl}}/tasks/1
+Authorization: Bearer {{token}}
+
+### -----------------------------------------------------
+### 9. ATUALIZAR TAREFA (PUT) - RF-04
+### -----------------------------------------------------
+PUT {{baseUrl}}/tasks/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "title": "Estudar para a prova (ATUALIZADO)",
+  "description": "Revisão completa + prática de CRUD e autenticação JWT."
+}
+
+### -----------------------------------------------------
+### 10. EXCLUIR TAREFA (DELETE) - RF-04
+### -----------------------------------------------------
+DELETE {{baseUrl}}/tasks/1
+Authorization: Bearer {{token}}
+
+### -----------------------------------------------------
+### 11. EXCLUIR USUÁRIO (DELETE) - RF-03
+### CUIDADO: apaga o usuário e todas as tarefas (cascade)
+### -----------------------------------------------------
+# DELETE {{baseUrl}}/users/1
+# Authorization: Bearer {{token}}
